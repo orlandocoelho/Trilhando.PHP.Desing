@@ -1,0 +1,17 @@
+{
+  "name":"RT/AulaDp",
+  "authors":[
+    {
+      "name":"Orlando Luca Coelho",
+      "email":"orlando@rabbitech.com.br"
+    }
+  ],
+  "require":{
+    "php": ">=5.4"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    }
+  }
+}
