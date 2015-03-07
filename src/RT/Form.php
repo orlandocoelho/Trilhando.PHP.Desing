@@ -2,6 +2,7 @@
 
 namespace RT;
 
+use RT\Database\Dados;
 use RT\Interfaces\FormContainerField;
 use RT\Interfaces\FormInterface;
 use RT\Traits\FieldTrait;
@@ -9,7 +10,7 @@ use RT\Input;
 use RT\Textarea;
 use RT\Button;
 use RT\FieldSet;
-
+use RT\Database\ServicesDB;
 
 class Form implements FormInterface, FormContainerField
 {
@@ -20,6 +21,8 @@ class Form implements FormInterface, FormContainerField
     private $class = "";
     private $method = 'POST';
     private $validator;
+    private $field;
+
 
     public function __construct(Validator $validator, $action = "", $class = "", $method = 'POST')
     {
@@ -29,9 +32,9 @@ class Form implements FormInterface, FormContainerField
         $this->method = $method;
     }
 
-    public function createField($field, $type = null, array $array = array() )
+    public function createField($fieldDesejado, $type = null, array $array = array() )
     {
-        switch(strtolower($field)){
+        switch(strtolower($fieldDesejado)){
             case 'input':
                 $field = new Input($type, $array);
                 break;
@@ -44,10 +47,26 @@ class Form implements FormInterface, FormContainerField
             case 'fieldset':
                 $field = new FieldSet();
                 break;
-            default;
+            case 'select':
+                $field = new Select(new Dados((new ServicesDB())->conexao()), $array);
+                break;
+            default:
+                $field = new Divider();
+                break;
         }
 
-        return $field;
+        $this->field = $field;
+        return $this->field;
+    }
+
+    public function popular(PopulateIterador $populator)
+    {
+        echo "<pre>";
+        print_r($this->field->setValue('value'));
+        echo "</pre>";
+        foreach ($populator as $key => $value) {
+            print_r($key);
+        }
     }
 
     public function render()

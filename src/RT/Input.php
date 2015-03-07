@@ -40,4 +40,13 @@ class Input implements ElementInterface
 
         return $in;
     }
+
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
 }

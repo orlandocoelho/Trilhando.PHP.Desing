@@ -19,8 +19,10 @@ require_once "../vendor/autoload.php";
     use \RT\Form;
     use \RT\Request;
     use \RT\Validator;
+    use \RT\PopulateIterador;
 
     $form = new Form(new Validator(new Request()));
+
 
     $nome = $form->createField('input', 'text', array(
         "id" => 'id',
@@ -46,25 +48,50 @@ require_once "../vendor/autoload.php";
         "required" => true
     ));
 
+    $categoria = $form->createField('select', null, array(
+        "id" => "id",
+        "name" => "categoria",
+        "class" => "form-control"
+    ));
+
     $button = $form->createField('button', 'submit', array(
         "id" => 'id',
         "name" => "button",
         "value" => 'Enviar',
         "class" => "btn btn-default"
-        ));
+    ));
 
+    $divider = $form->createField("divider");
 
     $fieldSet = $form->createField('fieldset');
 
-    $fieldSet->addField($nome)->addField($valor)->addField($descricao)->addField($button);
+    $fieldSet->addField($nome)
+        ->addField($divider)
+        ->addField($valor)
+        ->addField($divider)
+        ->addField($descricao)
+        ->addField($divider)
+        ->addField($categoria)
+        ->addField($divider)
+        ->addField($button);
 
     $form->addField($fieldSet);
+
+    $dados = array(
+        'Nome' => 'Tenis de corrida',
+        'Valor' => '120,00',
+        'Descricao' => 'Descrição do produto contendo ate 200 caracteres'
+    );
+
+    $populator = new PopulateIterador($dados);
+
+    $form->popular($populator);
+
     $form->render();
 
     ?>
+
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
