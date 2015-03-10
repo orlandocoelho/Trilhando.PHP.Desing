@@ -9,13 +9,13 @@ use RT\Exception\ClassNotFoundException;
 
 class Form implements FormInterface, FormContainerField
 {
-
     use FieldTrait;
 
     private $action = "";
     private $class = "";
     private $method = 'POST';
     private $validator;
+    private $field;
 
     private static $typesDir = "RT\\Elements\\";
 
@@ -33,12 +33,20 @@ class Form implements FormInterface, FormContainerField
         if (!class_exists($class)) {
             throw new ClassNotFoundException("Field class unknown: {$class}");
         }
-        $field = new $class($type, $array);
-        return $field;
+        $this->field = new $class($type, $array);
+
+
+        return $this->field;
+
     }
 
     public function popular(Array $array)
     {
+
+        foreach ($this->field->campos as $field) {
+            var_dump($field->getName());
+        }
+
         foreach ($array as $key => $value) {
         }
     }

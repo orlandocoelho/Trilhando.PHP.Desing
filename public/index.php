@@ -26,7 +26,7 @@ require_once "../vendor/autoload.php";
 
     $nome = $form->createField('Input', 'text', array(
         "id" => 'id',
-        "name" => "nome",
+        "name" => "nomeProduto",
         "class" => "form-control",
         "placeholder" => "Nome do produto",
         "required" => true
