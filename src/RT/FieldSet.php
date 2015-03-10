@@ -61,6 +61,4 @@ class FieldSet implements FormContainerField, ElementInterface
         return $this;
     }
 
-
-
 }

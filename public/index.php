@@ -83,9 +83,7 @@ require_once "../vendor/autoload.php";
         'Descricao' => 'Descrição do produto contendo ate 200 caracteres'
     );
 
-    $populator = new PopulateIterador($dados);
-
-    $form->popular($populator);
+    $form->popular($dados);
 
     $form->render();
 

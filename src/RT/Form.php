@@ -59,13 +59,9 @@ class Form implements FormInterface, FormContainerField
         return $this->field;
     }
 
-    public function popular(PopulateIterador $populator)
+    public function popular(Array $array)
     {
-        echo "<pre>";
-        print_r($this->field->setValue('value'));
-        echo "</pre>";
-        foreach ($populator as $key => $value) {
-            print_r($key);
+        foreach ($array as $key => $value) {
         }
     }
 
