@@ -26,7 +26,7 @@ require_once "../vendor/autoload.php";
 
     $nome = $form->createField('Input', 'text', array(
         "id" => 'id',
-        "name" => "nomeProduto",
+        "name" => "nome",
         "class" => "form-control",
         "placeholder" => "Nome do produto",
         "required" => true
@@ -65,6 +65,15 @@ require_once "../vendor/autoload.php";
 
     $fieldSet = $form->createField('FieldSet');
 
+    $dados = array(
+        'nome' => 'Tenis de corrida',
+        'valor' => '120,00',
+        'descricao' => 'Descrição do produto contendo ate 200 caracteres'
+    );
+
+    $form->popular($dados);
+
+
     $fieldSet->addField($nome)
         ->addField($divider)
         ->addField($valor)
@@ -76,14 +85,6 @@ require_once "../vendor/autoload.php";
         ->addField($button);
 
     $form->addField($fieldSet);
-
-    $dados = array(
-        'Nome' => 'Tenis de corrida',
-        'Valor' => '120,00',
-        'Descricao' => 'Descrição do produto contendo ate 200 caracteres'
-    );
-
-    $form->popular($dados);
 
     $form->render();
 

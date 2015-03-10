@@ -18,4 +18,11 @@ class Divider implements ElementInterface
         return "<br />";
     }
 
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+    }
+
 }

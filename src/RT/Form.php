@@ -16,6 +16,7 @@ class Form implements FormInterface, FormContainerField
     private $method = 'POST';
     private $validator;
     private $field;
+    private $elementName = array();
 
     private static $typesDir = "RT\\Elements\\";
 
@@ -29,25 +30,26 @@ class Form implements FormInterface, FormContainerField
 
     public function createField($getClass, $type = null, array $array = array() )
     {
-        $class = self::$typesDir.ucfirst($getClass);
+        $class = self::$typesDir.$getClass;
         if (!class_exists($class)) {
             throw new ClassNotFoundException("Field class unknown: {$class}");
         }
-        $this->field = new $class($type, $array);
+        $this->setField(new $class($type, $array));
 
+        $this->setElementName($this->getField()->getName());
 
-        return $this->field;
-
+        return $this->getField();
     }
 
     public function popular(Array $array)
     {
-
-        foreach ($this->field->campos as $field) {
-            var_dump($field->getName());
-        }
-
         foreach ($array as $key => $value) {
+            foreach ($this->getElementName() as $elementName) {
+                if($elementName == $key){
+
+                }
+            }
+
         }
     }
 
@@ -63,6 +65,38 @@ class Form implements FormInterface, FormContainerField
         $form .= "</form> \n";
 
        echo $form;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
+     * @param mixed $field
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+    }
+
+    /**
+     * @return array
+     */
+    public function getElementName()
+    {
+        return $this->elementName;
+    }
+
+    /**
+     * @param array $elementName
+     */
+    public function setElementName($elementName)
+    {
+        $this->elementName[] = $elementName;
     }
 
 }

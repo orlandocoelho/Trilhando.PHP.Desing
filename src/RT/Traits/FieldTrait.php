@@ -6,7 +6,6 @@ use RT\Interfaces\ElementInterface;
 
 trait FieldTrait
 {
-
     public $campos = array();
 
     public function addField(ElementInterface $campo)
@@ -14,5 +13,4 @@ trait FieldTrait
         $this->campos[] = $campo;
         return $this;
     }
-
-} 
+}

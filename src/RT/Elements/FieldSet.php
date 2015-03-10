@@ -14,6 +14,8 @@ class FieldSet implements FormContainerField, ElementInterface
     private $id;
     private $class;
 
+
+
     public function getElement()
     {
         $in = "<fieldset ";
@@ -26,6 +28,14 @@ class FieldSet implements FormContainerField, ElementInterface
 
         return $in;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+    }
+
 
     /**
      * @return mixed
