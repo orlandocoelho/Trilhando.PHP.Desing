@@ -2,15 +2,10 @@
 
 namespace RT;
 
-use RT\Database\Dados;
 use RT\Interfaces\FormContainerField;
 use RT\Interfaces\FormInterface;
 use RT\Traits\FieldTrait;
-use RT\Input;
-use RT\Textarea;
-use RT\Button;
-use RT\FieldSet;
-use RT\Database\ServicesDB;
+use RT\Exception\ClassNotFoundException;
 
 class Form implements FormInterface, FormContainerField
 {
@@ -21,8 +16,8 @@ class Form implements FormInterface, FormContainerField
     private $class = "";
     private $method = 'POST';
     private $validator;
-    private $field;
 
+    private static $typesDir = "RT\\Elements\\";
 
     public function __construct(Validator $validator, $action = "", $class = "", $method = 'POST')
     {
@@ -32,31 +27,14 @@ class Form implements FormInterface, FormContainerField
         $this->method = $method;
     }
 
-    public function createField($fieldDesejado, $type = null, array $array = array() )
+    public function createField($getClass, $type = null, array $array = array() )
     {
-        switch(strtolower($fieldDesejado)){
-            case 'input':
-                $field = new Input($type, $array);
-                break;
-            case 'textarea':
-                $field = new Textarea($array);
-                break;
-            case 'button':
-                $field = new Button($type, $array);
-                break;
-            case 'fieldset':
-                $field = new FieldSet();
-                break;
-            case 'select':
-                $field = new Select(new Dados((new ServicesDB())->conexao()), $array);
-                break;
-            default:
-                $field = new Divider();
-                break;
+        $class = self::$typesDir.ucfirst($getClass);
+        if (!class_exists($class)) {
+            throw new ClassNotFoundException("Field class unknown: {$class}");
         }
-
-        $this->field = $field;
-        return $this->field;
+        $field = new $class($type, $array);
+        return $field;
     }
 
     public function popular(Array $array)

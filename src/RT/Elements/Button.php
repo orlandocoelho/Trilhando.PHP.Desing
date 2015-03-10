@@ -1,25 +1,23 @@
 <?php
 
-namespace RT;
+namespace RT\Elements;
 
 use RT\Interfaces\ElementInterface;
 
-class Input implements ElementInterface
+class Button implements ElementInterface
 {
-    private $validType = array('text', 'email', 'number', 'hidden');
-    private $type;
-    private $name;
-    private $class;
-    private $placeholder;
-    private $value;
-    private $id;
-    private $required = false;
 
-    public function __construct($type = 'text', Array $array)
+    private $validType = array('reset', 'submit');
+    private $name;
+    private $type;
+    private $class;
+    private $id;
+    private $value = "Button";
+
+    public function __construct($type="reset", Array $array = array())
     {
-        if(!in_array($this->validType, $array))
-        {
-            $type = 'text';
+        if(!in_array($this->validType, $array)){
+            $type="reset";
         }
         $this->type = $type;
         foreach ($array as $attribute => $value) {
@@ -34,8 +32,6 @@ class Input implements ElementInterface
         $in .= "name=\"{$this->name}\" ";
         $in .= "class=\"{$this->class}\" ";
         $in .= "value=\"{$this->value}\" ";
-        $in .= "placeholder=\"{$this->placeholder}\" ";
-        $in .= "required=\"{$this->required}\" ";
         $in .= " />";
 
         return $in;

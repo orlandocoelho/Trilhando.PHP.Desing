@@ -19,12 +19,12 @@ require_once "../vendor/autoload.php";
     use \RT\Form;
     use \RT\Request;
     use \RT\Validator;
-    use \RT\PopulateIterador;
+    use \RT\Database\Dados;
+    use \RT\Database\ServicesDB;
 
     $form = new Form(new Validator(new Request()));
 
-
-    $nome = $form->createField('input', 'text', array(
+    $nome = $form->createField('Input', 'text', array(
         "id" => 'id',
         "name" => "nome",
         "class" => "form-control",
@@ -32,7 +32,7 @@ require_once "../vendor/autoload.php";
         "required" => true
     ));
 
-    $valor = $form->createField('input', 'text', array(
+    $valor = $form->createField('Input', 'text', array(
         "id" => 'id',
         "name" => "valor",
         "class" => "form-control",
@@ -40,7 +40,7 @@ require_once "../vendor/autoload.php";
         "required" => true
     ));
 
-    $descricao = $form->createField('input', 'text', array(
+    $descricao = $form->createField('Input', 'text', array(
         "id" => 'id',
         "name" => "descricao",
         "class" => "form-control",
@@ -48,22 +48,22 @@ require_once "../vendor/autoload.php";
         "required" => true
     ));
 
-    $categoria = $form->createField('select', null, array(
+    $categoria = $form->createField('Select', new Dados((new ServicesDB())->conexao()), array(
         "id" => "id",
         "name" => "categoria",
         "class" => "form-control"
-    ));
+     ));
 
-    $button = $form->createField('button', 'submit', array(
+    $button = $form->createField('Button', 'submit', array(
         "id" => 'id',
         "name" => "button",
         "value" => 'Enviar',
         "class" => "btn btn-default"
     ));
 
-    $divider = $form->createField("divider");
+    $divider = $form->createField("Divider");
 
-    $fieldSet = $form->createField('fieldset');
+    $fieldSet = $form->createField('FieldSet');
 
     $fieldSet->addField($nome)
         ->addField($divider)

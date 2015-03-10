@@ -1,6 +1,6 @@
 <?php
 
-namespace RT;
+namespace RT\Elements;
 
 use RT\Interfaces\ElementInterface;
 

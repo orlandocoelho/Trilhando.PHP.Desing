@@ -6,7 +6,7 @@
  * Time: 18:33
  */
 
-namespace RT;
+namespace RT\Elements;
 
 use RT\Database\Dados;
 use RT\Interfaces\ElementInterface;

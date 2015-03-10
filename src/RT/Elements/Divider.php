@@ -6,7 +6,7 @@
  * Time: 18:27
  */
 
-namespace RT;
+namespace RT\Elements;
 
 
 use RT\Interfaces\ElementInterface;
