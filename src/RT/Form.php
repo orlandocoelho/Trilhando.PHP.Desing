@@ -15,8 +15,6 @@ class Form implements FormInterface, FormContainerField
     private $class = "";
     private $method = 'POST';
     private $validator;
-    private $field;
-    private $elementName = array();
 
     private static $typesDir = "RT\\Elements\\";
 
@@ -34,20 +32,16 @@ class Form implements FormInterface, FormContainerField
         if (!class_exists($class)) {
             throw new ClassNotFoundException("Field class unknown: {$class}");
         }
-        $this->field = new $class($type, $array);
 
-        $this->setElementName($this->field);
-
-        return $this->field;
+        return new $class($type, $array);
     }
-
-
 
     public function popular(Array $array)
     {
         foreach ($array as $key => $value) {
-            foreach ($this->getElementName() as $elementName) {
-                $elementName->getName() == $key ? $elementName->setValue($value) : null;
+            $campo = $this->findFieldByName($key);
+            if (null !== $campo) {
+                $campo->setValue($value);
             }
         }
     }
@@ -64,22 +58,6 @@ class Form implements FormInterface, FormContainerField
         $form .= "</form> \n";
 
        echo $form;
-    }
-
-    /**
-     * @return array
-     */
-    public function getElementName()
-    {
-        return $this->elementName;
-    }
-
-    /**
-     * @param array $elementName
-     */
-    public function setElementName($elementName)
-    {
-        $this->elementName[] = $elementName;
     }
 
     /**

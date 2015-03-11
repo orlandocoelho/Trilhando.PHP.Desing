@@ -70,14 +70,6 @@ require_once "../vendor/autoload.php";
 
     $fieldSet = $form->createField('FieldSet');
 
-    $dados = array(
-        'nome' => '',
-        'valor' => 'q120,00',
-        'descricao' => 'Descrição do produto contendo ate 200 caracteres'
-    );
-
-    $form->popular($dados);
-
     $form->getValidator()->addRule(
         array(
             'element' => $nome,
@@ -112,8 +104,6 @@ require_once "../vendor/autoload.php";
         )
     );
 
-    $form->getValidator()->validate();
-
     $fieldSet->addField($nome)
         ->addField($divider)
         ->addField($valor)
@@ -125,6 +115,16 @@ require_once "../vendor/autoload.php";
         ->addField($button);
 
     $form->addField($fieldSet);
+
+    $dados = array(
+        'nome' => '',
+        'valor' => 'a120.00',
+        'descricao' => 'Descrição do produto contendo ate 200 caracteres'
+    );
+
+    $form->popular($dados);
+
+    $form->getValidator()->validate();
 
     $form->render();
 
