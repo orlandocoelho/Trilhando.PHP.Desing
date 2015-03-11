@@ -5,6 +5,7 @@ namespace RT\Traits;
 use RT\Interfaces\ElementInterface;
 use RT\Interfaces\FormContainerField;
 
+
 trait FieldTrait
 {
     public $campos = array();

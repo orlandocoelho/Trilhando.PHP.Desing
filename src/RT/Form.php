@@ -15,6 +15,7 @@ class Form implements FormInterface, FormContainerField
     private $class = "";
     private $method = 'POST';
     private $validator;
+    private $placement = 'top';
 
     private static $typesDir = "RT\\Elements\\";
 
@@ -46,9 +47,16 @@ class Form implements FormInterface, FormContainerField
         }
     }
 
-    public function render()
+    public function render($placement = 'top')
     {
-        $form = "<form ";
+        $validePlacement = ['top', 'infield', 'bottom'];
+        if (!in_array(strtolower($placement), $validePlacement)) {
+            throw new \InvalidArgumentException("Invalid value. Must be \"top\", \"infield\" or \"bottom\"");
+        }
+        $this->placement = $placement;
+        $form = $this->getValidator()->getMessages("<li class='alert alert-danger'>");
+
+        $form .= "<form ";
         $form .= "action=\"{$this->action}\" ";
         $form .= "method=\"{$this->method}\" ";
         $form .= "class=\"{$this->class}\">\n";
@@ -58,6 +66,27 @@ class Form implements FormInterface, FormContainerField
         $form .= "</form> \n";
 
        echo $form;
+    }
+
+    public function setErrorPlacement($errorPlacement = "top")
+    {
+        $validValues = ["top", "infield", "bottom"];
+        if (!in_array(strtolower($errorPlacement), $validValues)) {
+            throw new \InvalidArgumentException("Invalid value. Must be \"top\", \"infield\" or \"bottom\"");
+        }
+
+        $this->errorPlacement = $errorPlacement;
+        if ($errorPlacement == "infield" && count($this->validator->getFieldsWithError()) > 0) {
+            foreach ($this->validator->getFieldsWithError() as $field) {
+                $field->setClass("form-control error");
+                $field->setExtraAttributes([
+                    "data-toggle" => "tooltip",
+                    "title" => $field->getErrorMessage()
+                ]);
+            }
+        }
+
+        return $this;
     }
 
     /**
