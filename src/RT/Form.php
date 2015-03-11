@@ -34,22 +34,21 @@ class Form implements FormInterface, FormContainerField
         if (!class_exists($class)) {
             throw new ClassNotFoundException("Field class unknown: {$class}");
         }
-        $this->setField(new $class($type, $array));
+        $this->field = new $class($type, $array);
 
-        $this->setElementName($this->getField()->getName());
+        $this->setElementName($this->field);
 
-        return $this->getField();
+        return $this->field;
     }
+
+
 
     public function popular(Array $array)
     {
         foreach ($array as $key => $value) {
             foreach ($this->getElementName() as $elementName) {
-                if($elementName == $key){
-
-                }
+                $elementName->getName() == $key ? $elementName->setValue($value) : null;
             }
-
         }
     }
 
@@ -68,22 +67,6 @@ class Form implements FormInterface, FormContainerField
     }
 
     /**
-     * @return mixed
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @param mixed $field
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-    }
-
-    /**
      * @return array
      */
     public function getElementName()
@@ -97,6 +80,22 @@ class Form implements FormInterface, FormContainerField
     public function setElementName($elementName)
     {
         $this->elementName[] = $elementName;
+    }
+
+    /**
+     * @return Validator
+     */
+    public function getValidator()
+    {
+        return $this->validator;
+    }
+
+    /**
+     * @param Validator $validator
+     */
+    public function setValidator($validator)
+    {
+        $this->validator = $validator;
     }
 
 }

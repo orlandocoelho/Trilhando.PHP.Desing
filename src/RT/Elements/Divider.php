@@ -24,5 +24,12 @@ class Divider implements ElementInterface
     public function getName()
     {
     }
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 
 }

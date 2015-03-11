@@ -10,6 +10,11 @@ require_once "../vendor/autoload.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Design Patterns</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        li {list-style: none;}
+    </style>
+
 </head>
 <body>
 <div class="container">
@@ -66,13 +71,48 @@ require_once "../vendor/autoload.php";
     $fieldSet = $form->createField('FieldSet');
 
     $dados = array(
-        'nome' => 'Tenis de corrida',
-        'valor' => '120,00',
+        'nome' => '',
+        'valor' => 'q120,00',
         'descricao' => 'Descrição do produto contendo ate 200 caracteres'
     );
 
     $form->popular($dados);
 
+    $form->getValidator()->addRule(
+        array(
+            'element' => $nome,
+            'rules' => array(
+                array(
+                    'rule' => 'is_required'
+                )
+            )
+        )
+    );
+    $form->getValidator()->addRule(
+        array(
+            'element' => $valor,
+            'rules' => array(
+                array(
+                    'rule' => 'is_numeric'
+                )
+            )
+        )
+    );
+    $form->getValidator()->addRule(
+        array(
+            'element' => $descricao,
+            'rules' => array(
+                array(
+                    'rule' => 'max_length',
+                    'params' => array(
+                        'max' => 200
+                    )
+                )
+            )
+        )
+    );
+
+    $form->getValidator()->validate();
 
     $fieldSet->addField($nome)
         ->addField($divider)
@@ -87,6 +127,8 @@ require_once "../vendor/autoload.php";
     $form->addField($fieldSet);
 
     $form->render();
+
+    echo $form->getValidator()->getMessages() ? $form->getValidator()->getMessages("<li class='alert alert-danger'>") : null;
 
     ?>
 

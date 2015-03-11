@@ -71,6 +71,14 @@ class FieldSet implements FormContainerField, ElementInterface
         return $this;
     }
 
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
 
 
 }

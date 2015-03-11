@@ -57,4 +57,12 @@ class Select implements ElementInterface
         $this->name = $name;
     }
 
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
 }
