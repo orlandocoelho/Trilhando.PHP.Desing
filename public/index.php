@@ -124,11 +124,11 @@ require_once "../vendor/autoload.php";
 
     $form->popular($dados);
 
-    $form->getValidator()->validate();
+    //$form->getValidator()->validate();
 
-    $form->render();
+    $form->render('infield');
 
-    echo $form->getValidator()->getMessages() ? $form->getValidator()->getMessages("<li class='alert alert-danger'>") : null;
+    //echo $form->getValidator()->getMessages() ? $form->getValidator()->getMessages("<li class='alert alert-danger'>") : null;
 
     ?>
 

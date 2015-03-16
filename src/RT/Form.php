@@ -15,7 +15,6 @@ class Form implements FormInterface, FormContainerField
     private $class = "";
     private $method = 'POST';
     private $validator;
-    private $placement = 'top';
 
     private static $typesDir = "RT\\Elements\\";
 
@@ -49,23 +48,36 @@ class Form implements FormInterface, FormContainerField
 
     public function render($placement = 'top')
     {
-        $validePlacement = ['top', 'infield', 'bottom'];
-        if (!in_array(strtolower($placement), $validePlacement)) {
-            throw new \InvalidArgumentException("Invalid value. Must be \"top\", \"infield\" or \"bottom\"");
+        $this->validator->validate();
+
+        $form = "";
+
+        if($placement == 'top') {
+            $form .= $this->validator->getMessages("<li class='alert alert-danger'>");
         }
-        $this->placement = $placement;
 
-
-        $form = "<form ";
+        $form .= "<form ";
         $form .= "action=\"{$this->action}\" ";
         $form .= "method=\"{$this->method}\" ";
         $form .= "class=\"{$this->class}\">\n";
         foreach ($this->campos as $in) {
             $form .= $in->getElement() . "\n";
+            if($placement == 'infield' && in_array($in, $this->validator->getFieldError()))
+            {
+                $form .= "<span class='text-danger'>".$this->validator->getArrayMeasages()[$in->getName()]."</span>\n";
+            }
+            echo "<pre>";
+            print_r($in);
+            echo "</pre>";
         }
         $form .= "</form> \n";
 
-       echo $form;
+        if($placement == 'bottom') {
+            $form .= $this->validator->getMessages("<li class='alert alert-danger'>");
+        }
+
+        echo $form;
+
     }
 
     /**

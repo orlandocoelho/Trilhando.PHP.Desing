@@ -15,6 +15,7 @@ class Validator implements InterfaceValidator
     private $request;
     private $rules = [];
     private $messages = [];
+    private $fieldError = [];
 
     public function __construct(Request $request)
     {
@@ -63,30 +64,46 @@ class Validator implements InterfaceValidator
         return $listMessages;
     }
 
+    public function getArrayMeasages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFieldError()
+    {
+        return $this->fieldError;
+    }
+
     public function is_required($target)
     {
-        if($target->getValue() != '')
+        if(!$target->getValue() != ''){
+            $this->fieldError[] = $target;
+            $this->messages[] = "O Campo {$target->getName()} é obrigatório!";
+            return false;
+        }
             return true;
-
-        $this->messages[] = "O Campo {$target->getName()} é obrigatório!";
-        return false;
     }
 
     protected function is_numeric($target)
     {
-        if(is_numeric($target->getValue()))
-            return true;
-
-        $this->messages[] = "O Campo {$target->getName()} deve ser numérico!";
-        return false;
+        if (!is_numeric($target->getValue())){
+            $this->fieldError[] = $target;
+            $this->messages[] = "O Campo {$target->getName()} deve ser numérico!";
+            return false;
+        }
+        return true;
     }
 
     protected function max_length($target, $params)
     {
-        if(strlen($target->getValue()) <= $params['max'])
+        if (strlen($target->getValue()) <= $params['max']){
             return true;
-
+        }
         $this->messages[] = "O Campo {$target->getName()} deve ter no máximo {$params['max']} caracteres!";
+        $this->fieldError[] = $target;
         return false;
     }
 
