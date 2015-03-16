@@ -128,7 +128,7 @@ require_once "../vendor/autoload.php";
 
     $form->render();
 
-    //echo $form->getValidator()->getMessages() ? $form->getValidator()->getMessages("<li class='alert alert-danger'>") : null;
+    echo $form->getValidator()->getMessages() ? $form->getValidator()->getMessages("<li class='alert alert-danger'>") : null;
 
     ?>
 
