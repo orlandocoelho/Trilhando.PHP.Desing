@@ -62,14 +62,13 @@ class Form implements FormInterface, FormContainerField
         $form .= "class=\"{$this->class}\">\n";
         foreach ($this->campos as $in) {
             $form .= $in->getElement() . "\n";
-            if($placement == 'infield' && in_array($in, $this->validator->getFieldError()))
-            {
-                $form .= "<span class='text-danger'>".$this->validator->getArrayMeasages()[$in->getName()]."</span>\n";
+                foreach($in->campos as $val) {
+                    if ($placement == 'infield' && in_array($val, $this->validator->getFieldError())) {
+                        $form .= "<span class='text-danger'>" . $this->validator->getArrayMessages()[$val->getName()] . "</span>\n";
+                    }
+                }
             }
-            echo "<pre>";
-            print_r($in);
-            echo "</pre>";
-        }
+
         $form .= "</form> \n";
 
         if($placement == 'bottom') {

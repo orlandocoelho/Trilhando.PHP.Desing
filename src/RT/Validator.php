@@ -64,7 +64,7 @@ class Validator implements InterfaceValidator
         return $listMessages;
     }
 
-    public function getArrayMeasages()
+    public function getArrayMessages()
     {
         return $this->messages;
     }
@@ -81,7 +81,7 @@ class Validator implements InterfaceValidator
     {
         if(!$target->getValue() != ''){
             $this->fieldError[] = $target;
-            $this->messages[] = "O Campo {$target->getName()} é obrigatório!";
+            $this->messages[$target->getName()] = "O campo {$target->getName()} é obrigatório!";
             return false;
         }
             return true;
@@ -91,7 +91,7 @@ class Validator implements InterfaceValidator
     {
         if (!is_numeric($target->getValue())){
             $this->fieldError[] = $target;
-            $this->messages[] = "O Campo {$target->getName()} deve ser numérico!";
+            $this->messages[$target->getName()] = "O campo {$target->getName()} deve ser numérico!";
             return false;
         }
         return true;
@@ -102,8 +102,8 @@ class Validator implements InterfaceValidator
         if (strlen($target->getValue()) <= $params['max']){
             return true;
         }
-        $this->messages[] = "O Campo {$target->getName()} deve ter no máximo {$params['max']} caracteres!";
         $this->fieldError[] = $target;
+        $this->messages[$target->getName()] = "O campo {$target->getName()} deve ter no máximo {$params['max']} caracteres!";
         return false;
     }
 

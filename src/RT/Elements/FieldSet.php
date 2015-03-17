@@ -11,9 +11,9 @@ class FieldSet implements FormContainerField, ElementInterface
 
     use FieldTrait;
 
+    private $name;
     private $id;
     private $class;
-
 
 
     public function getElement()
@@ -34,6 +34,7 @@ class FieldSet implements FormContainerField, ElementInterface
      */
     public function getName()
     {
+        return $this->name;
     }
 
 
