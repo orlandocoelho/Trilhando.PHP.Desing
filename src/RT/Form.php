@@ -46,14 +46,21 @@ class Form implements FormInterface, FormContainerField
         }
     }
 
-    public function render($placement = 'top')
+    public function render($placement = 'infield')
     {
         $this->validator->validate();
 
         $form = "";
 
+        if($placement == 'top' || $placement == 'bottom') {
+            // reset error message in field
+            foreach ($this->validator->getFieldsWithError() as $field) {
+                $field->setErrorMessage(null);
+            }
+        }
+
         if($placement == 'top') {
-            $form .= $this->validator->getMessages("<li class='alert alert-danger'>");
+            $form .= $this->validator->renderErrorMessages("<li class='alert alert-danger'>");
         }
 
         $form .= "<form ";
@@ -61,18 +68,13 @@ class Form implements FormInterface, FormContainerField
         $form .= "method=\"{$this->method}\" ";
         $form .= "class=\"{$this->class}\">\n";
         foreach ($this->campos as $in) {
-            $form .= $in->getElement() . "\n";
-                foreach($in->campos as $val) {
-                    if ($placement == 'infield' && in_array($val, $this->validator->getFieldError())) {
-                        $form .= "<span class='text-danger'>" . $this->validator->getArrayMessages()[$val->getName()] . "</span>\n";
-                    }
-                }
+                $form .= $in->getElement() . "\n";
             }
 
         $form .= "</form> \n";
 
         if($placement == 'bottom') {
-            $form .= $this->validator->getMessages("<li class='alert alert-danger'>");
+            $form .= $this->validator->renderErrorMessages("<li class='alert alert-danger'>");
         }
 
         echo $form;

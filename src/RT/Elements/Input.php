@@ -6,6 +6,8 @@ use RT\Interfaces\ElementInterface;
 
 class Input implements ElementInterface
 {
+    use \RT\Traits\ErrorTrait;
+
     private $validType = array('text', 'email', 'number', 'hidden');
     private $type;
     private $name;
@@ -37,6 +39,11 @@ class Input implements ElementInterface
         $in .= "placeholder=\"{$this->placeholder}\" ";
         $in .= "required=\"{$this->required}\" ";
         $in .= " />";
+
+        if (!is_null($this->errorMessage)) {
+            $in .= "<span class='text-danger'>{$this->errorMessage}</span>";
+        }
+
 
         return $in;
     }

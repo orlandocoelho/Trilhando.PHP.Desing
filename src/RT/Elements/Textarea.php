@@ -7,6 +7,8 @@ use RT\Interfaces\ElementInterface;
 class Textarea implements ElementInterface
 {
 
+    use \RT\Traits\ErrorTrait;
+
     private $id;
     private $nome;
     private $value;
@@ -34,6 +36,10 @@ class Textarea implements ElementInterface
         $in .= "col=\"{$this->col}\" ";
         $in .= "required=\"{$this->required}\" ";
         $in .= ">{$this->value}</textarea>";
+
+        if (!is_null($this->errorMessage)) {
+            $in .= "<span class='text-danger'>{$this->errorMessage}</span>";
+        }
 
         return $in;
     }

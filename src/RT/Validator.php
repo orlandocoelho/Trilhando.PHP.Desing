@@ -15,7 +15,7 @@ class Validator implements InterfaceValidator
     private $request;
     private $rules = [];
     private $messages = [];
-    private $fieldError = [];
+    private $fieldsWithError = [];
 
     public function __construct(Request $request)
     {
@@ -49,7 +49,7 @@ class Validator implements InterfaceValidator
     /**
      * @return array
      */
-    public function getMessages($openTag = '<li>', $closeTag = '</li>')
+    public function renderErrorMessages($openTag = '<li>', $closeTag = '</li>')
     {
         if(count($this->messages) == 0)
             return null;
@@ -64,7 +64,7 @@ class Validator implements InterfaceValidator
         return $listMessages;
     }
 
-    public function getArrayMessages()
+    public function getMessages()
     {
         return $this->messages;
     }
@@ -72,15 +72,16 @@ class Validator implements InterfaceValidator
     /**
      * @return array
      */
-    public function getFieldError()
+    public function getFieldsWithError()
     {
-        return $this->fieldError;
+        return $this->fieldsWithError;
     }
 
     public function is_required($target)
     {
         if(!$target->getValue() != ''){
-            $this->fieldError[] = $target;
+            $target->setErrorMessage("O campo {$target->getName()} é obrigatório!");
+            $this->fieldsWithError[] = $target;
             $this->messages[$target->getName()] = "O campo {$target->getName()} é obrigatório!";
             return false;
         }
@@ -90,7 +91,8 @@ class Validator implements InterfaceValidator
     protected function is_numeric($target)
     {
         if (!is_numeric($target->getValue())){
-            $this->fieldError[] = $target;
+            $target->setErrorMessage("O campo {$target->getName()} deve ser numérico!");
+            $this->fieldsWithError[] = $target;
             $this->messages[$target->getName()] = "O campo {$target->getName()} deve ser numérico!";
             return false;
         }
@@ -102,7 +104,8 @@ class Validator implements InterfaceValidator
         if (strlen($target->getValue()) <= $params['max']){
             return true;
         }
-        $this->fieldError[] = $target;
+        $target->setErrorMessage("O campo {$target->getName()} deve ter no máximo {$params['max']} caracteres!");
+        $this->fieldsWithError[] = $target;
         $this->messages[$target->getName()] = "O campo {$target->getName()} deve ter no máximo {$params['max']} caracteres!";
         return false;
     }

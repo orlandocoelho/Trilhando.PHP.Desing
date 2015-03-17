@@ -124,12 +124,17 @@ require_once "../vendor/autoload.php";
 
     $form->popular($dados);
 
-    //$form->getValidator()->validate();
+    echo "<h3>Erros em cima</h3><hr />";
 
-    $form->render('infield');
+    $form->render('top');
 
-    //echo $form->getValidator()->getMessages() ? $form->getValidator()->getMessages("<li class='alert alert-danger'>") : null;
+    echo "<h3>Erros nos campos</h3><hr />";
 
+    $form->render();
+
+    echo "<h3>Erros embaixo</h3><hr />";
+
+    $form->render('bottom');
     ?>
 
 </div>
