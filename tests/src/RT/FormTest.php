@@ -22,12 +22,12 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('RT\Interfaces\FormContainerField', $this->form);
     }
 
-    /**
-     * @expectedException \RT\Exception\ClassNotFoundException
-     */
-    public function testVerificaSeEstaRecemendoUmaClassNoCreateField()
-    {
-        $this->form->createField();
-    }
+//    /**
+//     * @expectedException \RT\Exception\ClassNotFoundException
+//     */
+//    public function testVerificaSeEstaRecebendoUmaClassNoCreateField()
+//    {
+//        $this->form->createField();
+//    }
 
 }
