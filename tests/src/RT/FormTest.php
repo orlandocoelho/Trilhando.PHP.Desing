@@ -7,9 +7,16 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     private $form;
 
-    public function set()
+    public function setUp()
     {
-        $this->form = new Form();
+        $request = new \RT\Request();
+        $validator = new \RT\Validator($request);
+        $this->form = new \RT\Form($validator);
+    }
+
+    public function tearDown()
+    {
+        $this->form = null;
     }
 
     public function testFormConstruct()
