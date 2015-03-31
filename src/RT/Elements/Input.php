@@ -72,8 +72,6 @@ class Input implements ElementInterface
         return $this->value;
     }
 
-
-
     /**
      * @param mixed $value
      */

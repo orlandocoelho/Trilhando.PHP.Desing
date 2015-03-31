@@ -13,13 +13,17 @@ class ButtonTest extends \PHPUnit_Framework_TestCase
         $this->field = new \RT\Elements\Button('submit', $array);
     }
 
-    public function tearDown()
-    {
-        $this->field = null;
-    }
-
     public function testFormInstance()
     {
         $this->assertInstanceOf('RT\Interfaces\ElementInterface', $this->field);
     }
+
+    public function testGetSetName()
+    {
+        $this->field->setName('Teste');
+
+        $this->assertEquals('Teste', $this->field->getName());
+    }
+
+
 }

@@ -2,8 +2,6 @@
 
 namespace RT;
 
-use RT\Elements\Button;
-
 class FormTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -29,5 +27,14 @@ class FormTest extends \PHPUnit_Framework_TestCase
 //    {
 //        $this->form->createField();
 //    }
+
+    public function testVerificaSetGetValidator()
+    {
+
+        $this->form->setValidator('Texto');
+
+        $this->assertEquals('Texto', $this->form->getValidator());
+
+    }
 
 }

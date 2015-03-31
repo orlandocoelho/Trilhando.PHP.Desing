@@ -2,17 +2,18 @@
 
 namespace RT\Elements;
 
-
-use RT\Database\Dados;
-use RT\Database\ServicesDB;
-
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
     private $field;
 
     public function setUp()
     {
-        $dados = new Dados((new ServicesDB())->conexao());
+
+        $dados = $this->getMockBuilder('\RT\Database\Dados')
+            ->disableOriginalConstructor()
+            ->getMock('\RT\Database\Dados')
+        ;
+
         $array = array(1,2,3);
         $this->field = new \RT\Elements\Select($dados, $array);
     }
@@ -26,4 +27,11 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('RT\Interfaces\ElementInterface', $this->field);
     }
+
+    public function testGetSetName()
+    {
+        $this->field->setName('Teste');
+        $this->assertEquals('Teste', $this->field->getName());
+    }
+
 }

@@ -22,4 +22,17 @@ class InputTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('RT\Interfaces\ElementInterface', $this->field);
     }
+
+    public function testGetSetName()
+    {
+        $this->field->setName('Teste');
+        $this->assertEquals('Teste', $this->field->getName());
+    }
+
+    public function testGetSetValue()
+    {
+        $this->field->setValue('Valor do input');
+        $this->assertEquals('Valor do input', $this->field->getValue());
+    }
+
 }
