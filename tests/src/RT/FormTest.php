@@ -2,6 +2,8 @@
 
 namespace RT;
 
+use RT\Elements\Button;
+
 class FormTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -14,19 +16,18 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $this->form = new \RT\Form($validator);
     }
 
-    public function textInstance()
+    public function testFormInstance()
     {
-        $this->assertInstanceOf('RT\Interfaces\FormInterface', $this->form());
-        $this->assertInstanceOf('RT\Interfaces\FormContainerField', $this->form());
+        $this->assertInstanceOf('RT\Interfaces\FormInterface', $this->form);
+        $this->assertInstanceOf('RT\Interfaces\FormContainerField', $this->form);
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException \RT\Exception\ClassNotFoundException
      */
-    public function verificaSeEstaRecementoUmaClassNoCreateField()
+    public function testVerificaSeEstaRecemendoUmaClassNoCreateField()
     {
-        $class = $this->form->createField();
-        $this->assertInstanceOf('RT\Elements\Input', $class);
+        $this->form->createField();
     }
 
 }
