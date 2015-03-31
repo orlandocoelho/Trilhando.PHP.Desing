@@ -14,18 +14,6 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $this->form = new \RT\Form($validator);
     }
 
-    public function tearDown()
-    {
-        $this->form = null;
-    }
-
-    public function testFormConstruct()
-    {
-        $request = new \RT\Request();
-        $validator = new \RT\Validator($request);
-        $this->assertInstanceOf('RT\Validator', $validator);
-    }
-
     public function textInstance()
     {
         $this->assertInstanceOf('RT\Interfaces\FormInterface', $this->form());
